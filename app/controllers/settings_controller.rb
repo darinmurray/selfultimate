@@ -19,6 +19,6 @@ class SettingsController < ApplicationController
   end
 
   def setting_params
-    params.require(:setting).permit(:gender, :tone_1, :tone_2, :timespan, :pie_objective_length, :slice_objective_length, :slice_element_length, :element_objective_length, :task_length, :task_outcome_length)
+    params.require(:setting).permit(:gender, :tone_1, :tone_2, :timespan, :pie_objective_length, :slice_objective_length, :slice_element_length, :element_objective_length, :task_length, :task_outcome_length, :primary_wheel_id)
   end
 end

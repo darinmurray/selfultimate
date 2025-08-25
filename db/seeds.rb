@@ -1,4 +1,8 @@
 # db/seeds.rb
+
+# Load core values first
+load Rails.root.join('db', 'seeds', 'core_values.rb')
+
 # Clear existing data
 Pie.destroy_all
 

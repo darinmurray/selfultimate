@@ -118,7 +118,8 @@
     </div>
   <% end %>
   <% if current_user&.pies&.any? %>
-    <%= link_to pie_path(current_user.pies.first), style: "text-decoration: none; color: inherit;" do %>
+    <% primary_pie_id = current_user&.setting&.primary_wheel_id || current_user.pies.first.id %>
+    <%= link_to pie_path(primary_pie_id), style: "text-decoration: none; color: inherit;" do %>
       <div class="nav">
         <span class="icon-container"><span class="material-symbols-outlined" title="Pie Charts">clock_loader_10</span></span>
         <span class="nav-label">My Life</span>
