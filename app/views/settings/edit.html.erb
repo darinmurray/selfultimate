@@ -6,6 +6,15 @@
     <%= form.text_field :gender %>
   </div>
 
+
+  <div>
+    <%= form.label :primary_wheel_id, 'Primary Wheel' %>
+    <%= form.select :primary_wheel_id, options_from_collection_for_select(current_user.pies, :id, :name, @setting.primary_wheel_id), { prompt: 'Select a wheel' } %>
+  </div>
+
+
+
+
   <div>
     <%= form.label :tone_1 %>
     <%= form.text_field :tone_1 %>
