@@ -2,9 +2,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :pies, dependent: :destroy
   has_one :setting, dependent: :destroy
   has_many :ways, dependent: :destroy
+  has_many :pies, dependent: :destroy
   has_many :six_human_needs, through: :ways
   has_many :chat_sessions, dependent: :destroy
 
@@ -49,7 +49,9 @@ class User < ApplicationRecord
   before_destroy :clear_primary_wheel_reference
 
   def clear_primary_wheel_reference
-    setting&.update(primary_wheel_id: nil)
+    # Clear primary_wheel_id from any settings that reference this user's pies
+    pie_ids = pies.pluck(:id)
+    Setting.where(primary_wheel_id: pie_ids).update_all(primary_wheel_id: nil)
   end
 
   def create_default_setting

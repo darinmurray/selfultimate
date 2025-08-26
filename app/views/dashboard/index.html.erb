@@ -1,5 +1,13 @@
 
 <style>
+.dashboard-content{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  text-align: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
 .dashboard-content .pies-list-container {
   display: flex;
   flex-direction: row;
@@ -68,12 +76,13 @@
   color: white;
   text-decoration: none;
   border-radius: 4px;
-  margin-top: 20px;
+  margin: 0 auto;
+  width: fit-content;
 }
 </style>
 
 <div class="dashboard">
-  <h1>Welcome, <%= @user.firstname %>!</h1>
+  <h1>Welcome<%= ", #{@user.firstname}" if @user.firstname.present? %>!</h1>
   
   <div class="dashboard-content">
     <% if @pies&.any? %>
@@ -92,10 +101,6 @@
                       <div class="pie-chart-info">
                         <%= link_to pie.name, pie_path(pie), class: "pie-chart-link" %>
 
-
-                          <!-- div class="pie-list-actions">
-                            <%#= link_to 'Delete', pie_path(pie), method: :delete, confirm: 'Are you sure?', class: "delete-link" %>
-                          </div -->
                       </div>
 
 
@@ -107,11 +112,9 @@
 
 
 
-      <h2>Get Started</h2>
-      <p>Lets get you started on your new path!</p>
+      <h2>Lets get started...</h2>
+    
       <p>We are going to move you through self-awareness → clarity → planning → action → growth</p>
-
-
 
 
     <% end %>

@@ -115,10 +115,8 @@
   border: 1px solid black;
   background-color: var(--lightergray);
   color: black;
-    margin-right: 24px;
-
-    /* -webkit-box-shadow: 5px 5px 20px 5px rgba(255,208,251,0.56); 
-box-shadow: 5px 5px 20px 5px rgba(255,208,251,0.56); */
+  margin-right: 24px;
+  font-size: 1.5rem;
 }
 
 

@@ -370,7 +370,6 @@ body {
 
 /* SLIDER Tooltip */
 .objectives-tooltip {
-  font-size: 0.9rem;
   max-width: 250px;
   position: absolute;
   right: 100%;
@@ -1064,7 +1063,8 @@ template {
   <div class="pie-name-container">
     <div class="pie-name-input-wrapper">
       <div class="tooltip one pie-name-tooltip fade-in" >You can click to change the name at any time. </div>
-      <h1 class="pie-name-display" id="pie-name-display" contenteditable="true" data-placeholder="My Life"><%= (current_user.firstname + "'s Big Life!") || 'My Life' %></h1>
+      <h1 class="pie-name-display" id="pie-name-display" contenteditable="true" data-placeholder="My Life">
+        <%= current_user.firstname ? "#{current_user.firstname}'s Big Life!" : 'My Life' %></h1>
     </div>
   </div>
 
