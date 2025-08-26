@@ -43,7 +43,14 @@ class User < ApplicationRecord
   # Automatically create a setting for each new user
   after_create :create_default_setting
   after_create :create_default_ways
-  after_create :create_default_pie
+  # after_create :create_default_pie
+
+  # Clear primary_wheel_id before destroying user to avoid foreign key constraint
+  before_destroy :clear_primary_wheel_reference
+
+  def clear_primary_wheel_reference
+    setting&.update(primary_wheel_id: nil)
+  end
 
   def create_default_setting
     create_setting
@@ -59,69 +66,66 @@ class User < ApplicationRecord
     end
   end
 
-  def create_default_pie
-    # Create a default "Wheel of Life" pie for the new user
-    pie = pies.create!(name: "Wheel Of Life")
+  #   def create_default_pie
+  #     # Create a default "Wheel of Life" pie for the new user
+  #     pie = pies.create!(name: "Wheel Of Life")
 
-    # Create slices with elements
-    health_slice = pie.slices.create!(name: "Health", color: "#90EE90")
-    health_slice.elements.create!([
-      { name: "Exercise 3+ times per week", completed: false },
-      { name: "Eat 5+ servings of fruits/vegetables daily", completed: false },
-      { name: "Get 7-8 hours of sleep", completed: false },
-      { name: "Regular medical checkups", completed: false },
-      { name: "Maintain healthy weight", completed: false }
-    ])
+  #     # Create slices with elements
+  #     health_slice = pie.slices.create!(name: "Health", color: "#90EE90")
+  #     health_slice.elements.create!([
+  #       { name: "Exercise 3+ times per week", completed: false },
+  #       { name: "Eat 5+ servings of fruits/vegetables daily", completed: false },
+  #       { name: "Get 7-8 hours of sleep", completed: false },
+  #       { name: "Regular medical checkups", completed: false },
+  #       { name: "Maintain healthy weight", completed: false }
+  #     ])
 
-    purpose_slice = pie.slices.create!(name: "Higher Purpose", color: "#CD5C5C")
-    purpose_slice.elements.create!([
-      { name: "Clear personal mission statement", completed: false },
-      { name: "Regular spiritual/meditation practice", completed: false },
-      { name: "Volunteer or give back to community", completed: false },
-      { name: "Feel connected to something greater", completed: false },
-      { name: "Living according to core values", completed: false }
-    ])
+  #     purpose_slice = pie.slices.create!(name: "Higher Purpose", color: "#CD5C5C")
+  #     purpose_slice.elements.create!([
+  #       { name: "Clear personal mission statement", completed: false },
+  #       { name: "Regular spiritual/meditation practice", completed: false },
+  #       { name: "Volunteer or give back to community", completed: false },
+  #       { name: "Feel connected to something greater", completed: false },
+  #       { name: "Living according to core values", completed: false }
+  #     ])
 
-    work_slice = pie.slices.create!(name: "Work/Mission", color: "#F0E68C")
-    work_slice.elements.create!([
-      { name: "Enjoy my work most days", completed: false },
-      { name: "Feel challenged and growing", completed: false },
-      { name: "Good work-life balance", completed: false },
-      { name: "Fair compensation", completed: false },
-      { name: "Clear career path", completed: false }
-    ])
+  #     work_slice = pie.slices.create!(name: "Work/Mission", color: "#F0E68C")
+  #     work_slice.elements.create!([
+  #       { name: "Enjoy my work most days", completed: false },
+  #       { name: "Feel challenged and growing", completed: false },
+  #       { name: "Good work-life balance", completed: false },
+  #       { name: "Fair compensation", completed: false },
+  #       { name: "Clear career path", completed: false }
+  #     ])
 
-    relationship_slice = pie.slices.create!(name: "Relationships", color: "#87CEEB")
-    relationship_slice.elements.create!([
-      { name: "Loving spouse", completed: false },
-      { name: "Open communications both ways", completed: false },
-      { name: "Feel like I'm treated fairly", completed: false },
-      { name: "Regular date nights", completed: false },
-      { name: "Give and receive adequate praise", completed: false }
-    ])
+  #     relationship_slice = pie.slices.create!(name: "Relationships", color: "#87CEEB")
+  #     relationship_slice.elements.create!([
+  #       { name: "Loving spouse", completed: false },
+  #       { name: "Open communications both ways", completed: false },
+  #       { name: "Feel like I'm treated fairly", completed: false },
+  #       { name: "Regular date nights", completed: false },
+  #       { name: "Give and receive adequate praise", completed: false }
+  #     ])
 
-    wealth_slice = pie.slices.create!(name: "Wealth", color: "#DDA0DD")
-    wealth_slice.elements.create!([
-      { name: "Emergency fund (3-6 months expenses)", completed: false },
-      { name: "Saving for retirement", completed: false },
-      { name: "No high-interest debt", completed: false },
-      { name: "Clear financial goals", completed: false },
-      { name: "Regular budget tracking", completed: false }
-    ])
+  #     wealth_slice = pie.slices.create!(name: "Wealth", color: "#DDA0DD")
+  #     wealth_slice.elements.create!([
+  #       { name: "Emergency fund (3-6 months expenses)", completed: false },
+  #       { name: "Saving for retirement", completed: false },
+  #       { name: "No high-interest debt", completed: false },
+  #       { name: "Clear financial goals", completed: false },
+  #       { name: "Regular budget tracking", completed: false }
+  #     ])
 
-    development_slice = pie.slices.create!(name: "Development", color: "#20B2AA")
-    development_slice.elements.create!([
-      { name: "Learning new skills regularly", completed: false },
-      { name: "Reading personal development books", completed: false },
-      { name: "Seeking feedback and acting on it", completed: false },
-      { name: "Setting and achieving goals", completed: false },
-      { name: "Stepping outside comfort zone", completed: false }
-    ])
+  #     development_slice = pie.slices.create!(name: "Development", color: "#20B2AA")
+  #     development_slice.elements.create!([
+  #       { name: "Learning new skills regularly", completed: false },
+  #       { name: "Reading personal development books", completed: false },
+  #       { name: "Seeking feedback and acting on it", completed: false },
+  #       { name: "Setting and achieving goals", completed: false },
+  #       { name: "Stepping outside comfort zone", completed: false }
+  #     ])
 
-    # Set this as the user's primary wheel
-    setting.update(primary_wheel_id: pie.id) if setting.present?
-  end
+  #     # Set this as the user's primary wheel
+  #     setting.update(primary_wheel_id: pie.id) if setting.present?
+  #   end
 end
-
-# OAuth clinet ID and secret should be set in environment variables
-# 617847518582-1o9qg4dl58oarl6bs8r45m025avjqo3l.apps.googleusercontent.com
