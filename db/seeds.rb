@@ -7,7 +7,7 @@ load Rails.root.join('db', 'seeds', 'core_values.rb')
 Pie.destroy_all
 
 # Create sample pie
-pie = Pie.create!(name: "Life Balance Wheel")
+pie = Pie.create!(name: "Wheel Of Life")
 
 # Create slices with elements
 health_slice = pie.slices.create!(name: "Health", color: "#90EE90")
